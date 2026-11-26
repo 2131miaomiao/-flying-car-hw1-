@@ -1,0 +1,848 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>陆地航母 · 分体式飞行汽车全方位调研与分析 | 飞行汽车技术基础</title>
+<meta name="description" content="以小鹏汇天「陆地航母」为对象，从产品解构、技术可行性、应用场景到市场可行性的一次深度调研：分体式构型为什么成立、卡在哪里、能卖多少。">
+<meta name="author" content="课程作业 01">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%2306090e'/><path d='M16 6l7 10-7 10-7-10z' fill='none' stroke='%2345e0cf' stroke-width='2'/></svg>">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<div id="progress"></div>
+
+<header class="nav" id="nav">
+  <a class="brand" href="#top"><span class="dot"></span>陆地航母 <small>LAND AIRCRAFT CARRIER</small></a>
+  <nav>
+    <a href="#abstract">摘要</a>
+    <a href="#product">产品解构</a>
+    <a href="#tech">技术可行性</a>
+    <a href="#scene">应用场景</a>
+    <a href="#market">市场可行性</a>
+    <a href="#risk">风险</a>
+    <a href="#conclusion">结论</a>
+  </nav>
+</header>
+
+<main id="top">
+
+<!-- ══════════════ HERO ══════════════ -->
+<section id="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-tag"><span class="pulse"></span>课程作业 01 · <b>飞行汽车技术基础</b> · 2026</div>
+      <h1 class="hero-title"><span>陆地航母</span></h1>
+      <p class="hero-sub">小鹏汇天分体式飞行汽车 —— 把一架双座 eVTOL 折叠进一台六轮越野车。本页拆解它为什么这样设计、技术上能不能成立、卖给谁、以及 200 万元定价背后的市场算术。</p>
+      <div class="hero-meta">
+        <span>OBJECT · 分体式飞行汽车</span>
+        <span>MAKER · 小鹏汇天</span>
+        <span>STATUS · 量产交付前夜</span>
+      </div>
+      <div class="hero-actions">
+        <a class="btn primary" href="#abstract">开始阅读 <span aria-hidden="true">↓</span></a>
+        <a class="btn" href="#market">直看市场结论</a>
+      </div>
+    </div>
+
+    <div class="craft-stage" aria-label="陆地航母俯视结构示意图">
+      <div class="craft-glow"></div>
+      <svg viewBox="0 0 600 600" role="img" aria-label="分体式飞行汽车俯视图：六轮陆行体与双涵道六旋翼飞行体">
+        <defs>
+          <linearGradient id="bodyGrad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#16303a"/>
+            <stop offset=".55" stop-color="#0d1b24"/>
+            <stop offset="1" stop-color="#0a141b"/>
+          </linearGradient>
+          <linearGradient id="edgeGrad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#7ff3e6"/>
+            <stop offset="1" stop-color="#4a86ff"/>
+          </linearGradient>
+          <radialGradient id="hubGrad" cx=".35" cy=".3" r=".8">
+            <stop offset="0" stop-color="#a8fff3"/>
+            <stop offset="1" stop-color="#1c6b66"/>
+          </radialGradient>
+        </defs>
+
+        <!-- radar rings -->
+        <g class="spin-slow" opacity=".55">
+          <circle cx="300" cy="300" r="262" fill="none" stroke="rgba(69,224,207,.14)" stroke-width="1" stroke-dasharray="2 8"/>
+          <circle cx="300" cy="300" r="198" fill="none" stroke="rgba(69,224,207,.10)" stroke-width="1"/>
+          <circle cx="300" cy="300" r="128" fill="none" stroke="rgba(69,224,207,.12)" stroke-width="1" stroke-dasharray="40 14"/>
+          <g stroke="rgba(69,224,207,.35)" stroke-width="1.4">
+            <line x1="300" y1="26" x2="300" y2="42"/><line x1="300" y1="558" x2="300" y2="574"/>
+            <line x1="26" y1="300" x2="42" y2="300"/><line x1="558" y1="300" x2="574" y2="300"/>
+          </g>
+        </g>
+
+        <!-- crosshair -->
+        <g stroke="rgba(255,255,255,.08)" stroke-width="1">
+          <line x1="300" y1="40" x2="300" y2="560"/><line x1="40" y1="300" x2="560" y2="300"/>
+        </g>
+
+        <!-- orbit ticks -->
+        <g class="spin-slow" style="animation-duration:90s;animation-direction:reverse">
+          <circle cx="300" cy="300" r="232" fill="none" stroke="rgba(255,255,255,.10)" stroke-width="1" stroke-dasharray="1 9"/>
+        </g>
+
+        <!-- vehicle top view -->
+        <g class="float">
+          <!-- wheels -->
+          <g fill="#0e1a22" stroke="rgba(122,162,255,.45)" stroke-width="1.4">
+            <rect x="234" y="176" width="17" height="46" rx="7"/>
+            <rect x="349" y="176" width="17" height="46" rx="7"/>
+            <rect x="234" y="277" width="17" height="46" rx="7"/>
+            <rect x="349" y="277" width="17" height="46" rx="7"/>
+            <rect x="234" y="378" width="17" height="46" rx="7"/>
+            <rect x="349" y="378" width="17" height="46" rx="7"/>
+          </g>
+          <!-- chassis -->
+          <rect x="251" y="146" width="98" height="308" rx="42" fill="url(#bodyGrad)" stroke="rgba(127,243,230,.5)" stroke-width="1.6"/>
+          <rect x="262" y="158" width="76" height="284" rx="34" fill="none" stroke="rgba(255,255,255,.10)" stroke-width="1"/>
+          <!-- canopy -->
+          <path d="M300 162c19 0 30 16 30 38v22c0 10-13 16-30 16s-30-6-30-16v-22c0-22 11-38 30-38z" fill="rgba(122,162,255,.20)" stroke="rgba(127,243,230,.55)" stroke-width="1.2"/>
+
+          <!-- duct 1 -->
+          <g>
+            <circle cx="300" cy="238" r="46" fill="rgba(5,14,18,.55)" stroke="rgba(127,243,230,.65)" stroke-width="2"/>
+            <circle cx="300" cy="238" r="55" fill="none" stroke="rgba(127,243,230,.22)" stroke-width="1" stroke-dasharray="3 6"/>
+            <g stroke="rgba(168,255,243,.55)" stroke-width="2" stroke-linecap="round">
+              <path d="M300 238 L300 200"/><path d="M300 238 L333 257"/><path d="M300 238 L267 257"/>
+            </g>
+            <circle cx="300" cy="238" r="9" fill="url(#hubGrad)"/>
+          </g>
+          <!-- duct 2 -->
+          <g>
+            <circle cx="300" cy="375" r="46" fill="rgba(5,14,18,.55)" stroke="rgba(127,243,230,.65)" stroke-width="2"/>
+            <circle cx="300" cy="375" r="55" fill="none" stroke="rgba(127,243,230,.22)" stroke-width="1" stroke-dasharray="3 6"/>
+            <g stroke="rgba(168,255,243,.55)" stroke-width="2" stroke-linecap="round">
+              <path d="M300 375 L300 337"/><path d="M300 375 L333 394"/><path d="M300 375 L267 394"/>
+            </g>
+            <circle cx="300" cy="375" r="9" fill="url(#hubGrad)"/>
+          </g>
+
+          <!-- arms -->
+          <g stroke="rgba(127,243,230,.30)" stroke-width="1.2" fill="none">
+            <path d="M300 292 L300 312" stroke-dasharray="4 5"/>
+          </g>
+        </g>
+
+        <!-- leader labels -->
+        <g font-family="'JetBrains Mono',Consolas,monospace" font-size="14" fill="#a9b6c6" letter-spacing="1">
+          <g stroke="rgba(141,154,171,.5)" stroke-width="1" fill="none">
+            <path d="M262 238 L196 208 L130 208"/>
+            <path d="M346 375 L432 406 L470 406"/>
+          </g>
+          <text x="60" y="203" text-anchor="start" fill="#5ff0dd">① 双涵道 · 六旋翼</text>
+          <text x="60" y="221" text-anchor="start" fill="#7c8899" font-size="11">DUCTED FAN ×2</text>
+          <text x="474" y="401" text-anchor="start" fill="#5ff0dd">② 六轮独立驱动</text>
+          <text x="474" y="419" text-anchor="start" fill="#7c8899" font-size="11">6×6 / 5.5 m</text>
+        </g>
+        <g font-family="'JetBrains Mono',Consolas,monospace" font-size="9.5" fill="#5d6a7a" letter-spacing="2">
+          <text x="30" y="52">FIG.01 — DOCKED CONFIG.</text>
+          <text x="30" y="68">TOP VIEW / SCALE ≈ 1:38</text>
+          <text x="474" y="556">X3-F</text>
+        </g>
+        <!-- corner brackets -->
+        <g stroke="rgba(69,224,207,.5)" stroke-width="1.2" fill="none">
+          <path d="M24 96 L24 24 L96 24"/><path d="M504 24 L576 24 L576 96"/>
+          <path d="M24 504 L24 576 L96 576"/><path d="M504 576 L576 576 L576 504"/>
+        </g>
+      </svg>
+    </div>
+
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="n" data-count="200" data-prefix="≤" data-suffix="万">≤200万</div><div class="k">整机预售价（人民币）</div></div>
+      <div class="hero-stat"><div class="n" data-count="7000" data-suffix="+">7000+</div><div class="k">全球意向订单</div></div>
+      <div class="hero-stat"><div class="n" data-count="5.5" data-suffix="m">5.5m</div><div class="k">陆行体车长 · C 照可驾</div></div>
+      <div class="hero-stat"><div class="n" data-count="5" data-suffix="min">5min</div><div class="k">飞行体与陆行体分离</div></div>
+      <div class="hero-stat"><div class="n" data-count="30" data-suffix="min">30min</div><div class="k">量产工厂单台下线节拍</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ ABSTRACT ══════════════ -->
+<section id="abstract">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <p class="kicker">01 / Executive Summary</p>
+        <h2>先给结论：它卖的不是“会飞的车”</h2>
+      </div>
+      <div class="sec-idx">01</div>
+    </div>
+    <p class="lede">如果把「陆地航母」理解成“一台能飞上天的 SUV”，几乎所有技术判断都会失焦。它真正的产品定义是：<b>一台把个人飞行器当作“载荷”来运输和补能的越野母车</b>。分体，不是折中，而是这个品类目前唯一能跑通法规、重量与补能三条约束的工程解。</p>
+
+    <div class="verdict">
+      <div class="verdict-main reveal">
+        <p class="upto">核心判断</p>
+        <h3 style="margin-top:12px">技术已经“能飞”，商业模式还没有“能算得过来”。</h3>
+        <p>飞行体完成批量试产下线与多机载人试飞，说明<b>工程样机阶段已经结束</b>；但型号合格证（TC）仍在最后审定，运营合格证（OC）、起降场、保险与飞行资质构成的“非技术门槛”，才是 2027—2030 年真正的胜负手。</p>
+        <div class="quote">“证能不能拿、场能不能建、票能不能卖”——2026 年低空经济的竞争主线，已经从“样机能不能飞”切换到这三件事。</div>
+        <p class="mini">引述自公开报道对 2026 年行业阶段的判断 <a href="#src" style="color:var(--accent)">[5]</a></p>
+      </div>
+
+      <div class="scores reveal">
+        <div class="score">
+          <div class="top"><span>技术可行性</span><b class="hl">78</b></div>
+          <div class="track"><div class="fill" data-w="78"></div></div>
+        </div>
+        <div class="score">
+          <div class="top"><span>场景适配度</span><b>62</b></div>
+          <div class="track"><div class="fill" data-w="62"></div></div>
+        </div>
+        <div class="score">
+          <div class="top"><span>市场可行性</span><b style="color:var(--amber)">55</b></div>
+          <div class="track"><div class="fill amber" data-w="55"></div></div>
+        </div>
+        <div class="score">
+          <div class="top"><span>安全与适航成熟度</span><b style="color:var(--danger)">48</b></div>
+          <div class="track"><div class="fill red" data-w="48"></div></div>
+        </div>
+        <p class="mini" style="margin:0 2px">评分口径：0–100，由作者基于公开资料按“证据充分度 × 工程成熟度 × 商业化前置条件”加权自评，非任何机构评级。</p>
+      </div>
+    </div>
+
+    <div class="grid g3" style="margin-top:18px">
+      <article class="card reveal">
+        <p class="num">FINDING 01</p>
+        <h3>分体式是“法规套利”</h3>
+        <p>陆行体按乘用车管理（C 照、可上牌上路），飞行体按航空器管理（需 TC/PC/AC）。一体式 roadable aircraft 必须同时满足两套互相拉扯的标准，分体式把耦合点压缩到“对接机构”一处，审定边界立刻清晰。</p>
+      </article>
+      <article class="card reveal">
+        <p class="num">FINDING 02</p>
+        <h3>补能闭环被车解决了</h3>
+        <p>陆行体增程、续航 1000 km 以上，可给飞行体充电约 6 次。这意味着它不依赖“eVTOL 专用充电桩”，可以先用营地、景区、自家院子落地——基建依赖从“城市级”降到“场地级”。</p>
+      </article>
+      <article class="card reveal">
+        <p class="num">FINDING 03</p>
+        <h3>订单不等于需求</h3>
+        <p>7000+ 台意向订单对应的是 200 万元级高净值尝鲜人群。真正的市场验证要看到三件事：<b>可退定金转大定比例、2026 年实际交付量、单机年飞行小时数</b>。</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ PRODUCT ══════════════ -->
+<section id="product">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <p class="kicker">02 / Product Teardown</p>
+        <h2>一台车，加一架飞机，减一次“换乘”</h2>
+      </div>
+      <div class="sec-idx">02</div>
+    </div>
+    <p class="lede">整机由<b>陆行体</b>与<b>飞行体</b>两个独立适航/法规主体组成，通过自动对接机构实现“车载运输 + 场地起飞”。点击图中的编号，查看每个子系统的工程取舍。</p>
+
+    <div class="product">
+      <div class="stage reveal">
+        <svg viewBox="0 0 820 520" role="img" aria-label="陆地航母侧视结构图">
+          <defs>
+            <linearGradient id="carGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#182a34"/><stop offset="1" stop-color="#0a1218"/>
+            </linearGradient>
+          </defs>
+          <!-- grid -->
+          <g stroke="rgba(255,255,255,.05)" stroke-width="1">
+            <path d="M0 100H820M0 180H820M0 260H820M0 340H820M0 420H820"/>
+            <path d="M100 0V520M220 0V520M340 0V520M460 0V520M580 0V520M700 0V520"/>
+          </g>
+          <!-- ground -->
+          <line x1="40" y1="436" x2="780" y2="436" stroke="rgba(69,224,207,.35)" stroke-width="1.5"/>
+          <g stroke="rgba(69,224,207,.14)" stroke-width="1">
+            <path d="M60 442l-12 12M120 442l-12 12M180 442l-12 12M240 442l-12 12M300 442l-12 12M360 442l-12 12M420 442l-12 12M480 442l-12 12M540 442l-12 12M600 442l-12 12M660 442l-12 12M720 442l-12 12"/>
+          </g>
+
+          <!-- wheels -->
+          <g fill="#0b141a" stroke="rgba(122,162,255,.5)" stroke-width="2">
+            <circle cx="176" cy="398" r="38"/><circle cx="176" cy="398" r="18" fill="none" stroke="rgba(122,162,255,.35)"/>
+            <circle cx="322" cy="398" r="38"/><circle cx="322" cy="398" r="18" fill="none" stroke="rgba(122,162,255,.35)"/>
+            <circle cx="600" cy="398" r="38"/><circle cx="600" cy="398" r="18" fill="none" stroke="rgba(122,162,255,.35)"/>
+          </g>
+
+          <!-- rover body -->
+          <path d="M92 372 L92 322 Q92 306 108 304 L150 300 L182 268 Q190 258 206 258 L360 256 Q376 256 384 266 L420 304 L716 306 Q736 308 736 326 L736 372 Q736 384 722 384 L106 384 Q92 384 92 372 Z"
+                fill="url(#carGrad)" stroke="rgba(127,243,230,.42)" stroke-width="1.8"/>
+          <!-- windows -->
+          <path d="M200 296 L226 272 L318 270 L332 296 Z" fill="rgba(122,162,255,.18)" stroke="rgba(127,243,230,.35)"/>
+          <path d="M340 296 L340 270 L372 270 L392 296 Z" fill="rgba(122,162,255,.12)" stroke="rgba(127,243,230,.28)"/>
+          <!-- rear dock platform -->
+          <rect x="470" y="292" width="250" height="14" rx="6" fill="rgba(69,224,207,.12)" stroke="rgba(69,224,207,.4)"/>
+          <g stroke="rgba(69,224,207,.5)" stroke-width="1.4">
+            <path d="M500 292v-10M560 292v-10M690 292v-10"/>
+          </g>
+
+          <!-- aircraft (docked, side) -->
+          <g class="float">
+            <path d="M492 262 Q492 236 528 232 L648 232 Q700 232 706 258 Q708 270 692 270 L512 270 Q494 270 492 262 Z"
+                  fill="rgba(18,38,44,.95)" stroke="rgba(127,243,230,.6)" stroke-width="1.6"/>
+            <ellipse cx="530" cy="232" rx="16" ry="40" fill="rgba(6,16,20,.9)" stroke="rgba(127,243,230,.55)" stroke-width="1.6"/>
+            <ellipse cx="672" cy="232" rx="16" ry="40" fill="rgba(6,16,20,.9)" stroke="rgba(127,243,230,.55)" stroke-width="1.6"/>
+            <path d="M546 232h110" stroke="rgba(127,243,230,.25)" stroke-dasharray="3 5"/>
+            <path d="M560 246h90" stroke="rgba(255,255,255,.10)"/>
+          </g>
+          <!-- folded arms -->
+          <g stroke="rgba(127,243,230,.35)" stroke-width="1.4" fill="none">
+            <path d="M470 286 L440 268"/><path d="M722 286 L752 268"/>
+          </g>
+
+          <!-- dimension -->
+          <g stroke="rgba(255,255,255,.25)" stroke-width="1">
+            <path d="M92 462v10M736 462v10M92 468h644"/>
+          </g>
+          <text x="414" y="492" fill="#8d9aab" font-size="12" text-anchor="middle" font-family="'JetBrains Mono',Consolas,monospace">5.5 m · 6×6 · C 照可驾</text>
+
+          <!-- hotspots -->
+          <g class="hotspot" data-key="duct" tabindex="0" role="button" aria-label="双涵道六旋翼">
+            <circle cx="530" cy="210" r="12"/><text x="530" y="210">1</text>
+          </g>
+          <g class="hotspot" data-key="dock" tabindex="0" role="button" aria-label="自动分离结合机构">
+            <circle cx="612" cy="300" r="12"/><text x="612" y="300">2</text>
+          </g>
+          <g class="hotspot" data-key="wheel" tabindex="0" role="button" aria-label="六轮全轮驱动">
+            <circle cx="600" cy="398" r="12"/><text x="600" y="398">3</text>
+          </g>
+          <g class="hotspot" data-key="range" tabindex="0" role="button" aria-label="增程动力与补能">
+            <circle cx="180" cy="330" r="12"/><text x="180" y="330">4</text>
+          </g>
+          <g class="hotspot" data-key="cabin" tabindex="0" role="button" aria-label="双座座舱与飞控">
+            <circle cx="300" cy="282" r="12"/><text x="300" y="282">5</text>
+          </g>
+
+          <text x="48" y="52" fill="#5d6a7a" font-size="10" letter-spacing="2" font-family="'JetBrains Mono',Consolas,monospace">FIG.02 — SIDE ELEVATION / DOCKED</text>
+        </svg>
+      </div>
+
+      <div class="readout reveal" id="readout">
+        <div class="card">
+          <p class="k">01 / LIFT SYSTEM</p>
+          <h4>六旋翼 · 双涵道</h4>
+          <p>两具大直径涵道包裹 6 副旋翼，涵道把叶尖涡流约束在环内：悬停效率更高、噪声更集中、桨叶被包住更安全。代价是结构增重与巡航阻力，因此它只服务于“垂直起降段”。</p>
+        </div>
+        <div class="card">
+          <p class="k">02 / DOCKING</p>
+          <h4>自动分离与结合</h4>
+          <p>全流程约 5 分钟：驻车调平 → 舱盖开启、锁止解锁 → 机臂展开并自检 → 电气/冷却快接断开 → 飞控接管。对接精度与重复插拔寿命，是这个构型最容易被低估的可靠性难点。</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flow reveal">
+      <div class="step"><div class="t">T+0:00</div><div class="s">驻车调平</div><div class="d">选硬质平地，车身调平，清空起降区</div></div>
+      <div class="step"><div class="t">T+0:40</div><div class="s">开舱解锁</div><div class="d">后舱盖开启，机械锁止释放</div></div>
+      <div class="step"><div class="t">T+1:30</div><div class="s">机臂展开</div><div class="d">机臂自动展开到位并完成自检</div></div>
+      <div class="step"><div class="t">T+3:30</div><div class="s">系统接管</div><div class="d">飞控上电、航前检查、航线装订</div></div>
+      <div class="step"><div class="t">T+5:00</div><div class="s">垂直起飞</div><div class="d">自动起飞，进入目视/超视距飞行</div></div>
+    </div>
+    <p class="mini">注：以上时间轴依据公开演示的“约 5 分钟”自动分离过程拆解，各阶段耗时为本页估算，用于说明流程结构，不代表官方标定值。</p>
+
+    <div class="split" style="margin-top:44px">
+      <div class="card flat reveal">
+        <h3>关键参数（公开信息）</h3>
+        <div class="spec" style="margin-top:14px">
+          <div>整机形态</div><div>分体式：陆行体 + 双座飞行体</div>
+          <div>陆行体驱动</div><div>6×6 全轮驱动 · 增程式</div>
+          <div>陆行体车长</div><div>5.5 m</div>
+          <div>陆行体续航</div><div>&gt; 1000 km（增程）</div>
+          <div>对飞行体补能</div><div>可充电约 6 次</div>
+          <div>驾驶资质</div><div>C 照可驾驶陆行体</div>
+          <div>飞行体布局</div><div>六旋翼 · 双涵道 · 双座</div>
+          <div>安全冗余</div><div>双电机失效冗余设计</div>
+          <div>分离 / 结合</div><div>约 5 分钟（自动）</div>
+          <div>预售价</div><div>200 万元以内</div>
+          <div>交付节奏</div><div>2026 年开启交付（计划）</div>
+        </div>
+        <p class="mini">来源：企业公开披露与媒体报道汇总 <a href="#src" style="color:var(--accent)">[1][2][3]</a>；飞行体航时、航程、最大起飞重量等参数官方尚未完整公布，本页不做推测。</p>
+      </div>
+
+      <div class="card flat reveal">
+        <h3>为什么必须“分体”</h3>
+        <p style="margin-top:12px">一体式飞行汽车（roadable aircraft）的历史教训是：为了上路要背车轮、悬架、灯光、碰撞法规；为了飞行又要背航空适航的重量与冗余要求。两套标准叠加，结果通常是“车不像车、飞机不像飞机”。</p>
+        <div class="spec" style="margin-top:8px">
+          <div>法规</div><div>陆行体走乘用车公告，飞行体走适航审定</div>
+          <div>重量</div><div>飞行体不必携带底盘与车轮，推重比更优</div>
+          <div>补能</div><div>母车即“移动充电站”，摆脱固定桩</div>
+          <div>代价</div><div>不能边开边飞，每次飞行需场地与准备时间</div>
+          <div>代价</div><div>多一套对接机构，多一处可靠性风险</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ TECH ══════════════ -->
+<section id="tech">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <p class="kicker">03 / Technical Feasibility</p>
+        <h2>技术可行性：四条路线，一条已经跑通</h2>
+      </div>
+      <div class="sec-idx">03</div>
+    </div>
+    <p class="lede">评价飞行汽车的技术可行性，不能只看“能不能飞起来”，而要看<b>在现有法规、材料与能源体系下，能否以可接受的成本反复、安全地飞</b>。下面先比较四条技术路线，再拆关键子系统，最后给出硬约束。</p>
+
+    <div class="tabs" role="tablist">
+      <button class="tab active" data-tab="t1" role="tab">分体式（本对象）</button>
+      <button class="tab" data-tab="t2" role="tab">一体式飞行汽车</button>
+      <button class="tab" data-tab="t3" role="tab">纯 eVTOL</button>
+      <button class="tab" data-tab="t4" role="tab">传统直升机</button>
+    </div>
+
+    <div class="panel active" id="t1">
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th style="width:22%">维度</th><th>判断</th><th style="width:34%">说明</th></tr></thead>
+          <tbody>
+            <tr><td>法规路径</td><td><span class="tag ok">清晰</span></td><td>车与机分属两套体系，审定边界明确</td></tr>
+            <tr><td>重量效率</td><td><span class="tag ok">较优</span></td><td>飞行体不背底盘，结构重量占比低</td></tr>
+            <tr><td>使用门槛</td><td><span class="tag warn">中等</span></td><td>需场地、需飞行资质、需 5 分钟准备</td></tr>
+            <tr><td>补能条件</td><td><span class="tag ok">最优</span></td><td>母车增程补能，摆脱固定充电桩</td></tr>
+            <tr><td>核心难点</td><td><span class="tag warn">对接可靠性</span></td><td>机械锁止 + 电气快接的重复精度与寿命</td></tr>
+            <tr><td>结论</td><td colspan="2"><b>当前阶段工程可行度最高</b>，但把复杂度从“飞行”转移到了“地面机构”</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="panel" id="t2">
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th style="width:22%">维度</th><th>判断</th><th style="width:34%">说明</th></tr></thead>
+          <tbody>
+            <tr><td>法规路径</td><td><span class="tag bad">最复杂</span></td><td>需同时满足道路机动车与航空器两套标准</td></tr>
+            <tr><td>重量效率</td><td><span class="tag bad">差</span></td><td>车轮、悬架、车身结构都是“死重”</td></tr>
+            <tr><td>使用门槛</td><td><span class="tag ok">最低</span></td><td>理论上可门到门，无需换乘</td></tr>
+            <tr><td>补能条件</td><td><span class="tag warn">中等</span></td><td>可自行驶入充电站，但航空级充电设施少</td></tr>
+            <tr><td>核心难点</td><td><span class="tag bad">两头妥协</span></td><td>碰撞安全与航空减重直接冲突</td></tr>
+            <tr><td>结论</td><td colspan="2">体验上限最高、工程下限最低，短期难以通过适航</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="panel" id="t3">
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th style="width:22%">维度</th><th>判断</th><th style="width:34%">说明</th></tr></thead>
+          <tbody>
+            <tr><td>法规路径</td><td><span class="tag ok">清晰</span></td><td>纯航空器，TC/PC/AC/OC 四证路径成熟</td></tr>
+            <tr><td>重量效率</td><td><span class="tag ok">最优</span></td><td>无地面行驶机构，全部重量用于飞行</td></tr>
+            <tr><td>使用门槛</td><td><span class="tag bad">依赖基建</span></td><td>必须依赖起降场与专用充电/换电</td></tr>
+            <tr><td>补能条件</td><td><span class="tag warn">受限于场地</span></td><td>机场级电力增容是隐形门槛</td></tr>
+            <tr><td>核心难点</td><td><span class="tag warn">商业闭环</span></td><td>票价能否覆盖折旧、能耗与机组成本</td></tr>
+            <tr><td>结论</td><td colspan="2">eVTOL 是“航空器逻辑”，适合做运营，不适合做个人消费品</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="panel" id="t4">
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th style="width:22%">维度</th><th>判断</th><th style="width:34%">说明</th></tr></thead>
+          <tbody>
+            <tr><td>法规路径</td><td><span class="tag ok">成熟</span></td><td>全套适航与运行规章现成</td></tr>
+            <tr><td>重量效率</td><td><span class="tag warn">中等</span></td><td>机械传动复杂，但能量密度不受电池限制</td></tr>
+            <tr><td>使用门槛</td><td><span class="tag bad">高</span></td><td>执照、维护、停机坪成本高</td></tr>
+            <tr><td>补能条件</td><td><span class="tag ok">成熟</span></td><td>航空燃油体系完备</td></tr>
+            <tr><td>核心难点</td><td><span class="tag bad">成本与噪声</span></td><td>每飞行小时成本远高于电推进</td></tr>
+            <tr><td>结论</td><td colspan="2">性能基准线，但不符合“个人化、电动化、低成本”的品类叙事</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <h3 style="margin-top:52px">六个关键技术，决定它能不能“反复飞”</h3>
+    <div class="grid g3" style="margin-top:18px">
+      <article class="card reveal">
+        <div class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2.4"/><path d="M12 3v4M12 17v4M3 12h4M17 12h4"/></svg></div>
+        <h3>分布式电推进</h3>
+        <p>多旋翼独立驱动，单点失效可由其余动力单元补偿；电调响应快，姿态控制带宽远高于机械传动。</p>
+      </article>
+      <article class="card reveal">
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M12 12l8-4.5M12 12v9M12 12L4 7.5"/></svg></div>
+        <h3>双电机失效冗余</h3>
+        <p>官方口径为“双电机失效冗余”。六旋翼布局在损失两副动力后仍需维持可控，这对飞控重构能力与剩余功率裕度提出硬要求。</p>
+      </article>
+      <article class="card reveal">
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M4 16l4-8 4 5 3-4 5 7z"/><circle cx="7" cy="7" r="1.6"/></svg></div>
+        <h3>轻量化复材</h3>
+        <p>碳纤维复合材料与一体化成型是航时的基础。复材的批产一致性、缺陷检测与维修方案，是量产阶段的新课题。</p>
+      </article>
+      <article class="card reveal">
+        <div class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="9" width="18" height="6" rx="2"/><path d="M7 9V6M17 9V6M7 15v3M17 15v3"/></svg></div>
+        <h3>折叠与对接机构</h3>
+        <p>机臂折叠、锁止、电气与冷却快接。5 分钟完成分离，意味着数千次循环后仍要保持毫米级重复定位精度。</p>
+      </article>
+      <article class="card reveal">
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M3 12h4l2-6 3 12 2.5-8 2 5h4.5"/></svg></div>
+        <h3>飞控与自主飞行</h3>
+        <p>一键起降、自动航线、姿态保护，把“驾驶”降级为“监控”。这是让 C 照用户敢上手的前提，也是安全责任界定的关键。</p>
+      </article>
+      <article class="card reveal">
+        <div class="ico"><svg viewBox="0 0 24 24"><rect x="2" y="8" width="16" height="9" rx="2"/><path d="M22 11v3"/><path d="M6 12h5"/></svg></div>
+        <h3>能源与补能</h3>
+        <p>飞行体电池由陆行体增程系统补能，可充约 6 次。把“充电网络”问题转化为“油箱”问题，是分体式最被低估的商业价值。</p>
+      </article>
+    </div>
+
+    <div class="split" style="margin-top:40px">
+      <div class="card flat reveal">
+        <h3>技术成熟度（TRL）自评</h3>
+        <p class="mini" style="margin:6px 0 18px">TRL 1–9，9 为已批量应用。评估依据：公开的试产、试飞、取证与运营进展。</p>
+        <div class="chart">
+          <div class="bar-row"><span class="lbl">陆行体</span><div class="bar"><i data-w="95"></i></div><span class="val">TRL 9</span></div>
+          <div class="bar-row"><span class="lbl">飞行体平台</span><div class="bar"><i data-w="78" class="b2"></i></div><span class="val">TRL 7</span></div>
+          <div class="bar-row"><span class="lbl">适航取证</span><div class="bar"><i data-w="66" class="b2"></i></div><span class="val">TRL 6</span></div>
+          <div class="bar-row"><span class="lbl">自动对接</span><div class="bar"><i data-w="66" class="b3"></i></div><span class="val">TRL 6</span></div>
+          <div class="bar-row"><span class="lbl">运营体系</span><div class="bar"><i data-w="44" class="b3"></i></div><span class="val">TRL 4</span></div>
+        </div>
+      </div>
+
+      <div class="card flat reveal">
+        <h3>四个硬约束</h3>
+        <div class="spec" style="margin-top:12px">
+          <div>电池</div><div>航空级电芯需 ≥400 Wh/kg，量产电芯约 300 Wh/kg</div>
+          <div>适航</div><div>有人驾驶 eVTOL 审定标准仍在完善，TC 处于最后阶段</div>
+          <div>噪声</div><div>涵道可降噪，但起降场与居民区的距离仍是选址约束</div>
+          <div>空域</div><div>低空航路、报备流程、责任划分尚在试点</div>
+        </div>
+        <p class="mini">能量密度为行业公开讨论的典型量级，非针对该机型的实测数据；用于说明“航时受限”的物理原因。</p>
+      </div>
+    </div>
+
+    <div class="callout reveal">
+      <div class="c-ico">!</div>
+      <p><b>技术判断：</b>分体式把最难的“飞行”拆给了成熟度更高的航空供应链，把最不确定的“对接”留给自己。这意味着它的技术风险不是“飞不起来”，而是<b>“飞很多次之后，接口还准不准、密封还漏不漏、锁还锁不锁得住”</b>。这类风险只有靠批量运营数据才能暴露，无法靠样机试飞证明。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ SCENE ══════════════ -->
+<section id="scene">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <p class="kicker">04 / Use Cases</p>
+        <h2>场景：先做“目的地”，再做“交通工具”</h2>
+      </div>
+      <div class="sec-idx">04</div>
+    </div>
+    <p class="lede">一架航时有限、需要场地起降、由个人驾驶的双座飞行器，天然不适合高频通勤。它的场景排序应该按<b>“单位时间的体验价值”</b>而非“出行效率”来排。</p>
+
+    <div class="table-wrap reveal">
+      <table>
+        <thead><tr><th>场景</th><th>需求强度</th><th>付费意愿</th><th>基建依赖</th><th>判断</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><b>文旅 / 飞行营地体验</b></td><td><span class="tag ok">高</span></td><td><span class="tag ok">高</span></td><td><span class="tag ok">低（场地级）</span></td>
+            <td>首个能跑通的现金流场景，客单价高、复购靠“打卡”</td>
+          </tr>
+          <tr>
+            <td><b>高净值个人拥有</b></td><td><span class="tag ok">中高</span></td><td><span class="tag ok">高</span></td><td><span class="tag warn">中（需自建起降点）</span></td>
+            <td>200 万定价对应的核心客群，但年飞行小时数普遍偏低</td>
+          </tr>
+          <tr>
+            <td><b>应急救援 / 医疗转运</b></td><td><span class="tag ok">高</span></td><td><span class="tag warn">中（政府采购）</span></td><td><span class="tag warn">中</span></td>
+            <td>价值明确，但需要夜航、复杂气象与超视距能力，现版本未必够</td>
+          </tr>
+          <tr>
+            <td><b>海岛 / 边境 / 林区巡查</b></td><td><span class="tag warn">中</span></td><td><span class="tag warn">中</span></td><td><span class="tag ok">低</span></td>
+            <td>“车 + 机”组合在无路区域有独特价值，是差异化场景</td>
+          </tr>
+          <tr>
+            <td><b>城市通勤</b></td><td><span class="tag bad">低</span></td><td><span class="tag bad">低</span></td><td><span class="tag bad">极高</span></td>
+            <td>航时、起降点、空域、噪声四重约束，5 年内不成立</td>
+          </tr>
+          <tr>
+            <td><b>农林植保 / 物流</b></td><td><span class="tag warn">中</span></td><td><span class="tag bad">低</span></td><td><span class="tag ok">低</span></td>
+            <td>已被专用无人机以更低成本覆盖，载人平台没有优势</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="split" style="margin-top:34px">
+      <div class="reveal">
+        <h3>一次飞行的真实链路</h3>
+        <div class="tl" style="margin-top:18px">
+          <div class="tl-item"><div class="when">BEFORE · 预约</div><div class="what">营地 / 场地预约</div><div class="why">空域报备、天气窗口、起降位排期</div></div>
+          <div class="tl-item"><div class="when">T-60min · 到场</div><div class="what">安检、称重、气象简报</div><div class="why">载重与重心直接影响续航与操稳</div></div>
+          <div class="tl-item"><div class="when">T-30min · 准备</div><div class="what">飞行前检查、资质核验</div><div class="why">需持有相应飞行驾驶资质</div></div>
+          <div class="tl-item"><div class="when">T-5min · 分离</div><div class="what">车机分离、机臂展开</div><div class="why">自动流程，约 5 分钟</div></div>
+          <div class="tl-item"><div class="when">T+0 · 飞行</div><div class="what">垂直起降 + 目视航线</div><div class="why">现阶段的航时决定了“体验型”而非“通勤型”</div></div>
+          <div class="tl-item future"><div class="when">AFTER · 回收</div><div class="what">结合、补能、数据回传</div><div class="why">飞行数据是下一次迭代与保险定价的原料</div></div>
+        </div>
+      </div>
+
+      <div class="card flat reveal">
+        <h3>场景结论</h3>
+        <p style="margin-top:12px">把「陆地航母」放进“文旅体验”场景，它的所有缺点都会变成优点：<b>航时短</b>——体验飞行本来只需十几分钟；<b>需要场地</b>——营地正好提供场地与客流；<b>要 5 分钟准备</b>——这 5 分钟本身就是可展示的“仪式感”；<b>200 万定价</b>——营地按次收费可以摊薄。</p>
+        <p>反过来，把它放进“通勤”场景，同样的特性全部变成致命伤。这也是为什么企业同步推进另一条全倾转产品线 A868 面向城际出行——<b>两个场景，需要两种完全不同的构型</b>。</p>
+        <p class="mini">参考企业双产品线定位的公开表述 <a href="#src" style="color:var(--accent)">[5]</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ MARKET ══════════════ -->
+<section id="market">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <p class="kicker">05 / Market Feasibility</p>
+        <h2>市场：大盘很热，但热的是“低空经济”</h2>
+      </div>
+      <div class="sec-idx">05</div>
+    </div>
+    <p class="lede">低空经济的万亿叙事容易让人误判单个品类的天花板。「陆地航母」面对的是一个<b>年销千台级</b>的超高端细分市场，而不是百万台级的汽车市场。它的估值逻辑更接近“奢侈品 + 航空器”，而不是“新能源车”。</p>
+
+    <div class="split">
+      <div class="card flat reveal">
+        <h3>中国低空经济规模（机构预测）</h3>
+        <p class="mini" style="margin:6px 0 22px">单位：亿元人民币</p>
+        <div class="chart">
+          <div class="bar-row"><span class="lbl">2023</span><div class="bar"><i data-w="14"></i></div><span class="val">5,060</span></div>
+          <div class="bar-row"><span class="lbl">2026E</span><div class="bar"><i data-w="43" class="b2"></i></div><span class="val">15,000</span></div>
+          <div class="bar-row"><span class="lbl">2035E</span><div class="bar"><i data-w="100" class="b3"></i></div><span class="val">35,000</span></div>
+        </div>
+        <p class="mini">数据为赛迪顾问等机构对“低空经济”整体（含无人机、通航、基建、服务）的预测口径，<b>不等于载人飞行汽车市场规模</b>。引用时务必区分。</p>
+      </div>
+
+      <div class="card flat reveal">
+        <h3>竞争格局</h3>
+        <div class="table-wrap" style="margin-top:14px;border:0">
+          <table>
+            <thead><tr><th>玩家 / 型号</th><th>构型</th><th>进度</th></tr></thead>
+            <tbody>
+              <tr><td>亿航 EH216-S</td><td>多旋翼 eVTOL</td><td><span class="tag ok">TC/PC/AC 已取</span></td></tr>
+              <tr><td>峰飞 V2000CG</td><td>复合翼货运</td><td><span class="tag ok">货运 TC 已取</span></td></tr>
+              <tr><td>沃飞长空 AE200</td><td>倾转旋翼</td><td><span class="tag warn">审定中</span></td></tr>
+              <tr><td><b>小鹏汇天 陆地航母</b></td><td>分体式 · 六旋翼</td><td><span class="tag warn">TC 最后阶段</span></td></tr>
+              <tr><td>小鹏汇天 A868</td><td>全倾转</td><td><span class="tag warn">试飞验证</span></td></tr>
+              <tr><td>Joby / Archer</td><td>倾转 eVTOL</td><td><span class="tag warn">FAA 审定中</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="mini">亿航的“四证齐全”说明：<b>取证能力本身就是护城河</b>，而且取证顺序往往决定商业化顺序。</p>
+      </div>
+    </div>
+
+    <h3 style="margin-top:46px">商业模型：卖硬件，还是卖飞行小时？</h3>
+    <div class="grid g3" style="margin-top:18px">
+      <article class="card reveal">
+        <p class="num">REVENUE 01</p>
+        <h3>整车销售</h3>
+        <p>200 万元以内 / 台，7000+ 意向订单。按 10%–20% 定金转大定估算，短期可确认的收入量级在 <b>14 亿–28 亿元</b>（估算，未考虑退订与产能爬坡）。</p>
+      </article>
+      <article class="card reveal">
+        <p class="num">REVENUE 02</p>
+        <h3>营地与体验运营</h3>
+        <p>按次收费（体验飞行 + 培训 + 拍摄），是比卖车更稳定的现金流。海心沙等标杆场景的意义不在收入，而在<b>跑通“场地—空域—保险—客源”的模板</b>。</p>
+      </article>
+      <article class="card reveal">
+        <p class="num">REVENUE 03</p>
+        <h3>培训与后市场</h3>
+        <p>飞行资质培训、维保、电池更换、保险经纪。参考通航经验，后市场收入占比会随保有量上升而超过整机销售。</p>
+      </article>
+    </div>
+
+    <div class="split" style="margin-top:34px">
+      <div class="card flat reveal">
+        <h3>单位经济测算（作者的粗略估算）</h3>
+        <div class="spec" style="margin-top:12px">
+          <div>单台售价</div><div>200 万元</div>
+          <div>单台物料成本</div><div>约 110–130 万元（估算）</div>
+          <div>毛利率</div><div>约 35%–45%（估算）</div>
+          <div>年产能节拍</div><div>满产 30 分钟 / 台</div>
+          <div>年销 1,000 台</div><div>收入约 20 亿元</div>
+          <div>研发投入</div><div>B 轮融资 2.5 亿美元量级</div>
+        </div>
+        <p class="mini">成本结构无公开数据，以上为基于“航空器 + 汽车”双供应链的类比推算，仅用于判断量级，不可作为投资依据。</p>
+      </div>
+
+      <div class="card flat reveal">
+        <h3>市场可行性的四个前提</h3>
+        <div class="tl" style="margin-top:14px">
+          <div class="tl-item"><div class="when">前提一</div><div class="what">交付能力</div><div class="why">从“试产下线”到“稳定交付”，良率与供应链爬坡是第一道坎</div></div>
+          <div class="tl-item"><div class="when">前提二</div><div class="what">飞行资质供给</div><div class="why">飞行员/教员数量决定交付后的实际使用率</div></div>
+          <div class="tl-item"><div class="when">前提三</div><div class="what">起降场网络</div><div class="why">营地密度决定“买了能不能飞”</div></div>
+          <div class="tl-item"><div class="when">前提四</div><div class="what">保险与责任</div><div class="why">没有可负担的第三者责任险，个人市场无法规模化</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout reveal">
+      <div class="c-ico">!</div>
+      <p><b>市场判断：</b>7000+ 订单证明“有人愿意为稀缺体验付 200 万”，但订单是可退意向，不是营收。真正需要盯的三个数字是：<b>2026 年实际交付台数、单台年均飞行小时、营地/起降点数量</b>。这三个数字决定它是“现象级单品”还是“可持续品类”。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ RISK ══════════════ -->
+<section id="risk">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <p class="kicker">06 / Risk Map</p>
+        <h2>风险：技术风险在下降，制度风险在上升</h2>
+      </div>
+      <div class="sec-idx">06</div>
+    </div>
+    <p class="lede">按“发生概率 × 影响程度”排列，最需要关注的不是电池或旋翼，而是<b>适航进度、空域开放与一次重大安全事故</b>——后者足以让整个品类停摆数年。</p>
+
+    <div class="matrix reveal">
+      <div class="matrix-grid">
+        <div class="matrix-cell">
+          <p class="q">高概率 · 高影响</p>
+          <h4>适航与交付延期</h4>
+          <ul>
+            <li>TC 审定“最后阶段”可能持续数年</li>
+            <li>PC 审核与供应链良率爬坡</li>
+            <li>交付延迟直接打击订单转化与口碑</li>
+          </ul>
+        </div>
+        <div class="matrix-cell">
+          <p class="q">低概率 · 高影响</p>
+          <h4>重大安全事故</h4>
+          <ul>
+            <li>对接机构失效、动力失效、人为操作失误</li>
+            <li>一次致命事故可能引发全行业停飞整顿</li>
+            <li>保险成本会先于监管做出反应</li>
+          </ul>
+        </div>
+        <div class="matrix-cell">
+          <p class="q">高概率 · 中影响</p>
+          <h4>场景与基建不匹配</h4>
+          <ul>
+            <li>起降场审批慢于交付节奏</li>
+            <li>“买了飞不了”导致口碑反噬</li>
+            <li>营地密度不足，使用率低</li>
+          </ul>
+        </div>
+        <div class="matrix-cell">
+          <p class="q">低概率 · 中影响</p>
+          <h4>竞争与技术路线切换</h4>
+          <ul>
+            <li>倾转构型成熟后，六旋翼方案被降级为过渡产品</li>
+            <li>eVTOL 运营价格战压缩个人市场</li>
+            <li>政策补贴退坡</li>
+          </ul>
+        </div>
+      </div>
+      <div class="axis"><span>← 影响程度递增</span><span>发生概率递增 ↓</span></div>
+    </div>
+
+    <div class="grid g3" style="margin-top:26px">
+      <article class="card reveal">
+        <p class="num">MITIGATION 01</p>
+        <h3>把“证”当产品做</h3>
+        <p>审定过程中的每一份符合性验证报告，都是后续机型的复用资产。取证节奏应该被当作产品路线图的一等公民，而不是研发的收尾工作。</p>
+      </article>
+      <article class="card reveal">
+        <p class="num">MITIGATION 02</p>
+        <h3>先营地，后个人</h3>
+        <p>用自营/合作营地控制运行环境（场地、气象、维护、教员），把“不可控的个人使用”推迟到体系成熟之后。</p>
+      </article>
+      <article class="card reveal">
+        <p class="num">MITIGATION 03</p>
+        <h3>数据换保险</h3>
+        <p>用飞行小时、故障率、维修记录与保险公司共建定价模型。保险可负担之日，才是个人市场真正打开之时。</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ CONCLUSION ══════════════ -->
+<section id="conclusion">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <p class="kicker">07 / Conclusion</p>
+        <h2>结论：一个“正确的过渡产品”</h2>
+      </div>
+      <div class="sec-idx">07</div>
+    </div>
+
+    <div class="grid g2">
+      <div class="card flat reveal">
+        <h3>五条结论</h3>
+        <div class="tl" style="margin-top:16px">
+          <div class="tl-item"><div class="when">01 · 构型</div><div class="what">分体式是当下最优解，不是终极解</div><div class="why">它用“换乘”换来了法规清晰与重量效率，代价是使用链条变长</div></div>
+          <div class="tl-item"><div class="when">02 · 技术</div><div class="what">工程可行性已被试产与载人试飞证明</div><div class="why">剩下的问题从“能不能飞”变成“能不能反复、廉价、安全地飞”</div></div>
+          <div class="tl-item"><div class="when">03 · 场景</div><div class="what">文旅营地是唯一已闭环的场景</div><div class="why">航时短、需场地、准备久，在体验场景里反而都成了卖点</div></div>
+          <div class="tl-item"><div class="when">04 · 市场</div><div class="what">千台级细分市场，天花板由基建与保险决定</div><div class="why">200 万定价筛出了高净值客群，也筛掉了规模效应</div></div>
+          <div class="tl-item"><div class="when">05 · 风险</div><div class="what">最大变量不是技术，是制度与一次事故</div><div class="why">适航进度、空域开放、安全记录三者共同决定品类生死</div></div>
+        </div>
+      </div>
+
+      <div class="card flat reveal">
+        <h3>时间线：从“能飞”到“能运营”</h3>
+        <div class="tl" style="margin-top:16px">
+          <div class="tl-item"><div class="when">2024.09 — 2024.11</div><div class="what">首发亮相与公开飞行演示</div><div class="why">完成品类定义与公众认知教育</div></div>
+          <div class="tl-item"><div class="when">2026.03</div><div class="what">批量试产下线、多机载人试飞</div><div class="why">制造体系与运行流程首次跑通</div></div>
+          <div class="tl-item"><div class="when">2026 年内</div><div class="what">开启交付（计划）</div><div class="why">从“样机”进入“商品”</div></div>
+          <div class="tl-item future"><div class="when">2026.11</div><div class="what">TC 审定进入最后阶段</div><div class="why">取证是规模化交付的刚性前提</div></div>
+          <div class="tl-item future"><div class="when">2027 — 2028</div><div class="what">海外市场与营地网络扩张</div><div class="why">中东等市场对高价飞行器接受度更高</div></div>
+          <div class="tl-item future"><div class="when">2030+</div><div class="what">与倾转构型分工：体验 vs 通勤</div><div class="why">“陆地航母”守体验，“A868”攻城际</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="verdict-main reveal" style="margin-top:24px">
+      <p class="upto">一句话总结</p>
+      <h3 style="margin-top:12px">「陆地航母」的价值，不在于它是不是未来，而在于它把“个人飞行”从概念拉进了可交付、可定价、可取证的现实——哪怕这个现实，暂时只属于少数人和少数场地。</h3>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ SOURCES ══════════════ -->
+<section id="src">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <p class="kicker">08 / References</p>
+        <h2>资料来源</h2>
+      </div>
+      <div class="sec-idx">08</div>
+    </div>
+    <p class="lede">本页数据以企业公开披露与主流媒体报道为主，市场预测类数据来自第三方机构口径，已在正文标注。标注“估算”的内容为作者推算。</p>
+
+    <div class="src-list">
+      <a class="src" href="https://www.stcn.com/article/detail/3664756.html" target="_blank" rel="noopener"><span class="i">01</span><span>飞行汽车黄埔批量试产下线，小鹏汇天探索低空经济“广州模式”（证券时报 / 南方财经，2026-03-06）<em class="u">www.stcn.com</em></span><span class="d">2026-03</span></a>
+      <a class="src" href="https://article.pchome.net/news/13130.html" target="_blank" rel="noopener"><span class="i">02</span><span>小鹏汇天陆地航母采用六旋翼双涵道设计，订单已破 90 台（PChome，2026-04-27）<em class="u">article.pchome.net</em></span><span class="d">2026-04</span></a>
+      <a class="src" href="http://www.chinanews.com.cn/cj/shipin/cns-d/2026/04-16/news1051562.shtml" target="_blank" rel="noopener"><span class="i">03</span><span>探馆消博会：汇天“陆地航母”亮相，预售价 200 万元以内，已有超 7000 台订单（中国新闻网，2026-04-16）<em class="u">www.chinanews.com.cn</em></span><span class="d">2026-04</span></a>
+      <a class="src" href="https://www.gz.gov.cn/ysgz/xwdt/ysdt/content/mpost_10712876.html" target="_blank" rel="noopener"><span class="i">04</span><span>“广州智造”飞行汽车在黄埔批量试产下线（广州市人民政府，2026-03）<em class="u">www.gz.gov.cn</em></span><span class="d">2026-03</span></a>
+      <a class="src" href="https://www.sohu.com/a/1106735899_393779" target="_blank" rel="noopener"><span class="i">05</span><span>小鹏汇天低空出行取得关键突破，2026 低空经济迎来常态化运营元年（中国商报，2026-11-26）<em class="u">www.sohu.com</em></span><span class="d">2026-11</span></a>
+      <a class="src" href="https://finance.mingpao.com/fin/daily/20260811/1786382773738/" target="_blank" rel="noopener"><span class="i">06</span><span>「陸地航母」飛行汽車訂單逾 7000 部，小鵬匯天擬今年底量產（明報財經，2026-08-11）<em class="u">finance.mingpao.com</em></span><span class="d">2026-08</span></a>
+      <a class="src" href="https://www.bianews.com/news/details?id=231149" target="_blank" rel="noopener"><span class="i">07</span><span>小鹏汇天「陆地航母」三款车色正式公布（Bianews）<em class="u">www.bianews.com</em></span><span class="d">—</span></a>
+      <a class="src" href="http://www.cnautonews.com/zhinengwl/2025/07/16/detail_20250716378669.html" target="_blank" rel="noopener"><span class="i">08</span><span>小鹏汇天宣布完成 2.5 亿美元 B 轮融资（中国汽车报，2025-07-16）<em class="u">www.cnautonews.com</em></span><span class="d">2025-07</span></a>
+      <a class="src" href="https://m.sohu.com/a/805938434_430526/" target="_blank" rel="noopener"><span class="i">09</span><span>2024 年底启动预售，小鹏汇天“陆地航母”分体式飞行汽车首发亮相（搜狐汽车，2024）<em class="u">m.sohu.com</em></span><span class="d">2024</span></a>
+      <a class="src" href="https://lab.autozyx.com/fundamentals-of-flying-vehicle-technology/tesla-flying-roadster/" target="_blank" rel="noopener"><span class="i">10</span><span>课程参考案例：Tesla Flying Roadster（飞行汽车技术基础课程站）<em class="u">lab.autozyx.com</em></span><span class="d">—</span></a>
+    </div>
+
+    <p class="mini" style="margin-top:22px">说明：网页部分参数（如航时、航程、最大起飞重量）官方未完整公布，正文未做推测；涉及“估算”的数值均为作者基于公开信息的量级推算，仅用于课程分析，不作为事实或投资依据。</p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div class="l">
+      <div><b>飞行汽车技术基础</b> · 课程作业 01 · 2026</div>
+      <div>题目：针对飞行汽车某技术/产品的全方位调研与分析</div>
+    </div>
+    <div class="l" style="text-align:right">
+      <div>对象：小鹏汇天「陆地航母」分体式飞行汽车</div>
+      <div>静态站点 · 无外部依赖 · 可直接离线打开</div>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/app.js"></script>
+</body>
+</html>
